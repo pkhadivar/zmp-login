@@ -11,7 +11,16 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import {useForm, Controller} from 'react-hook-form'
+
+const schema = yup.object().shape({
+
+email: yup.string().email("Must be a valid email").required("Email is required"),
+password: yup.string().min(8,"Your password has to be at least 8 characters").required("Password is required")
+
+})
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +45,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
-  const {register, handleSubmit, control} = useForm()
+  const {register, handleSubmit, control, errors} = useForm({
+    resolver: yupResolver(schema),
+  })
 
   return (
     <Container component="main" maxWidth="xs">
