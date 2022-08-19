@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import { useController } from "react-hook-form";
 
 const Input = React.forwardRef(
-  ({ className, control, name: nameProp, ...rest }, refProp) => {
+  ({ label, className, control, name: nameProp, ...rest }, refProp) => {
     const {
       field: { onChange, onBlur, name, value, ref = refProp },
       fieldState: { invalid, isTouched, isDirty },
@@ -23,6 +23,7 @@ const Input = React.forwardRef(
         name={name}
         inputRef={ref}
         className={className}
+        label={label}
       />
     );
   }
