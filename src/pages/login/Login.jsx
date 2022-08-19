@@ -1,18 +1,16 @@
-import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import {useForm, Controller} from 'react-hook-form'
-
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { CheckBoxField } from "../../components/CheckBox/CheckBoxField";
+import { Input } from "../../components/input/input";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
-  const {register, handleSubmit, control} = useForm()
+  const { register, handleSubmit, control } = useForm();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -53,10 +51,11 @@ const Login = () => {
           noValidate
           onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}
         >
-          <TextField
+          <Input
+            {...register("email")}
+            control={control}
             variant="outlined"
             margin="normal"
-            inputRef={register}
             required
             fullWidth
             id="email"
@@ -65,10 +64,11 @@ const Login = () => {
             autoComplete="email"
             autoFocus
           />
-          <TextField
+          <Input
+            {...register("password")}
+            control={control}
             variant="outlined"
             margin="normal"
-            inputRef={register}
             required
             fullWidth
             name="password"
@@ -77,17 +77,11 @@ const Login = () => {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={
-              <Controller
-                as={Checkbox}
-                control={control}
-                name="remember"
-                color="primary"
-                defaultValue={false}
-              />
-            }
+          <CheckBoxField
+            color="primary"
             label="Remember me"
+            name="remember"
+            control={control}
           />
           <Button
             type="submit"
@@ -114,6 +108,6 @@ const Login = () => {
       </div>
     </Container>
   );
-}
+};
 
 export default Login;
