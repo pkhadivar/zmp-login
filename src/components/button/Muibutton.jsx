@@ -9,12 +9,16 @@ const Muibutton = ({
   size,
   onClick,
   color,
+  type,
   startIcon,
   endIcon,
+  ...rest
 }) => {
   return (
     <Stack spacing={spacing} direction={direction}>
       <Button
+        {...rest}
+        type={type}
         variant={variant}
         size={size}
         onClick={onClick}

@@ -1,4 +1,4 @@
-import styled from "styled-component";
+import styled from "styled-components";
 import { Checkbox } from "@material-ui/core";
 
 export const FormCheckBoxField = styled(Checkbox)`
