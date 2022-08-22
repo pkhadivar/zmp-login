@@ -5,27 +5,22 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { Input } from "../../components/input/input";
 import { CheckBoxField } from "../../components/CheckBox/CheckBoxField";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+//import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import HttpsIcon from "@mui/icons-material/Https";
 import Muibutton from "../../components/button/Muibutton";
 import { RowContainer, RowItem, LoginImage } from "./styled";
 
 const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email("Must be a valid email")
-    .required("Email is required"),
-  password: yup
-    .string()
-    .required("Password is required")
-    .min(8, "Your password has to be at least 8 characters"),
+  userName: yup.string().required("User name is required"),
+  password: yup.string().required("Password is required"),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  formWrapper: {
+    height: "100%",
+  }
 }));
 
 const Login = () => {
@@ -63,13 +61,17 @@ const Login = () => {
         <LoginImage src="/assets/images/email.gif" />
       </Grid>
       <Grid item xs={6}>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
+        <Grid container alignItems="center" justifyContent="center" direction="column" className={classes.formWrapper}>
+          <Avatar className={classes.avatar} >
             <LockOutlinedIcon />
           </Avatar>
-          <RowItem>
-            <Typography component="h1" variant="h5">
+          <Grid item xs={6}>
+          <div>
+            <Typography component="h1" variant="h4" mb={2} mt={4}>
               Sign in
+            </Typography>
+            <Typography variant="body2" color="gray" mb={5} >
+            Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs
             </Typography>
             <form
               className={classes.form}
@@ -77,18 +79,18 @@ const Login = () => {
               onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}
             >
               <Input
-                {...register("email")}
+                {...register("userName")}
                 control={control}
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="userName"
+                label="User name"
+                name="userName"
+                autoComplete="userName"
                 autoFocus
-                icon={AlternateEmailIcon}
+                icon={AccountCircleIcon}
               />
               <Input
                 {...register("password")}
@@ -128,8 +130,9 @@ const Login = () => {
                 Login
               </Muibutton>
             </form>
-          </RowItem>
-        </div>
+          </div>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
