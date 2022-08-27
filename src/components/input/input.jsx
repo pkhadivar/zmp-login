@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { useController } from "react-hook-form";
 import { InputAdornment } from "@material-ui/core";
@@ -6,17 +6,11 @@ import { AccountCircle } from "@material-ui/icons";
 
 const Input = React.forwardRef(
   (
-    {
-      label,
-      className,
-      control,
-      name: nameProp,
-      icon: Icon,
-      rules,
-      ...rest
-    },
+    { label, className, control, name: nameProp, icon: Icon, rules, ...rest },
     refProp
   ) => {
+    const [focus, setFocus] = useState(rest.autoFocus ? true : false);
+
     const {
       field: { onChange, onBlur, name, value, ref = refProp },
       fieldState: { error, isTouched, isDirty },
@@ -36,6 +30,8 @@ const Input = React.forwardRef(
         onBlur={onBlur}
         value={value}
         name={name}
+        onFocus={() => setFocus(true)}
+        onBlurCapture={() => setFocus(false)}
         inputRef={ref}
         className={className}
         label={label}
@@ -47,7 +43,11 @@ const Input = React.forwardRef(
           // ),
           endAdornment: (
             <InputAdornment position="end">
-              {Icon && <Icon />}
+              {Icon && (
+                <Icon
+                  color={!!error ? "error" : focus ? "primary" : "inherit"}
+                />
+              )}
             </InputAdornment>
           ),
         }}

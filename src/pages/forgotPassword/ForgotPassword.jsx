@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import HttpsIcon from "@mui/icons-material/Https";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,21 +9,25 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import HttpsIcon from "@mui/icons-material/Https";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Muibutton from "../../components/button/Muibutton";
-import { CheckBoxField } from "../../components/CheckBox/CheckBoxField";
 import { Input } from "../../components/input/input";
 import Slider from "react-slick";
+import { useState } from "react";
 
 const schema = yup.object().shape({
-  userName: yup.string().required("User name is required"),
-  password: yup.string().required("Password is required"),
+  email: yup.string().email("Enter valid email!").required("Email is required"),
+});
+
+const schema2 = yup.object().shape({
+  //email: yup.string().email("Enter valid email!").required("Email is required"),
 });
 
 const theme = createTheme();
 
-const Login2 = () => {
+const ForgotPass = () => {
   const settings = {
     dots: true,
     infinite: true,
@@ -33,17 +37,18 @@ const Login2 = () => {
     arrows: false,
   };
 
+  const [confirmReset, setConfirmReset] = useState(false);
+
   const onHandleSubmit = (data) => {
     // event.preventDefault();
     // const data = new FormData(event.currentTarget);
-    console.log({
-      userName: data.userName,
-      password: data.password,
-    });
+    if (confirmReset) {
+      console.log(data);
+    } else setConfirmReset(true);
   };
 
   const { register, handleSubmit, control, errors } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(confirmReset ? schema2 : schema),
   });
 
   return (
@@ -98,79 +103,94 @@ const Login2 = () => {
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  Sign in
+                  Forgot Password
                 </Typography>
                 <Typography variant="body2" color="gray" mb={5} mt={1}>
                   Lorem ipsum, or lipsum as it is sometimes known, is dummy text
                   used in laying out print, graphic or web designs
                 </Typography>
               </Grid>
-              <form
-                //  className={classes.form}
-                noValidate
-                onSubmit={handleSubmit((data) => onHandleSubmit(data))}
-              >
-                <Input
-                  {...register("userName")}
-                  control={control}
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="userName"
-                  label="User name"
-                  name="userName"
-                  autoComplete="userName"
-                  autoFocus
-                  icon={AccountCircleIcon}
-                />
-                <Input
-                  {...register("password")}
-                  control={control}
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  icon={HttpsIcon}
-                />
-                {/* <RowContainer container> */}
-                <Grid
-                  item
-                  container
-                  justifyContent="space-between"
-                  alignItems="center"
+              {!confirmReset ? (
+                <form
+                  //  className={classes.form}
+                  noValidate
+                  onSubmit={handleSubmit((data) => onHandleSubmit(data))}
                 >
-                  <CheckBoxField
-                    color="primary"
-                    label="Keep me signed in"
-                    name="remember"
+                  <Input
+                    {...register("email")}
                     control={control}
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    icon={AlternateEmailIcon}
                   />
 
-                  <Link href="#" variant="body2">
-                    Recovery Password
-                  </Link>
-                </Grid>
-
-                {/* </RowContainer> */}
-
-                <Muibutton
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  //className={classes.submit}
-                  size="large"
-                  mt={3}
+                  <Muibutton
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    //className={classes.submit}
+                    size="large"
+                    mt={3}
+                  >
+                    Submit
+                  </Muibutton>
+                </form>
+              ) : (
+                <form
+                  //  className={classes.form}
+                  noValidate
+                  onSubmit={handleSubmit((data) => onHandleSubmit(data))}
                 >
-                  Login
-                </Muibutton>
-              </form>
+                  <Input
+                    {...register("password")}
+                    control={control}
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    icon={HttpsIcon}
+                  />
+                  <Input
+                    {...register("confirmPassword")}
+                    control={control}
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                    autoComplete="current-password"
+                    icon={HttpsIcon}
+                  />
+
+                  <Muibutton
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    //className={classes.submit}
+                    size="large"
+                    mt={3}
+                  >
+                    Reset Password
+                  </Muibutton>
+                </form>
+              )}
             </Grid>
             <Grid item>
               <Typography
@@ -197,4 +217,4 @@ const Login2 = () => {
   );
 };
 
-export default Login2;
+export default ForgotPass;
