@@ -12,10 +12,11 @@ const Muibutton = ({
   type,
   startIcon,
   endIcon,
+  mt,
   ...rest
 }) => {
   return (
-    <Stack spacing={spacing} direction={direction}>
+    <Stack spacing={spacing} direction={direction} mt={mt}>
       <Button
         {...rest}
         type={type}
