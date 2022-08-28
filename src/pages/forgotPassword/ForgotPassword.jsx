@@ -22,7 +22,9 @@ const schema = yup.object().shape({
 });
 
 const schema2 = yup.object().shape({
-  //email: yup.string().email("Enter valid email!").required("Email is required"),
+  password: yup.string().required('Password is required'),
+  confirmPassword: yup.string()
+     .oneOf([yup.ref('password'), null], 'Passwords must match')
 });
 
 const theme = createTheme();

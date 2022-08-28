@@ -15,6 +15,7 @@ import Muibutton from "../../components/button/Muibutton";
 import { CheckBoxField } from "../../components/CheckBox/CheckBoxField";
 import { Input } from "../../components/input/input";
 import Slider from "react-slick";
+import Carousel from "../../components/carousel/Carousel";
 
 const schema = yup.object().shape({
   userName: yup.string().required("User name is required"),
@@ -24,15 +25,6 @@ const schema = yup.object().shape({
 const theme = createTheme();
 
 const Login2 = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-  };
-
   const onHandleSubmit = (data) => {
     // event.preventDefault();
     // const data = new FormData(event.currentTarget);
@@ -52,6 +44,9 @@ const Login2 = () => {
         <CssBaseline />
         <Grid
           item
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
           xs={false}
           sm={6}
           sx={{
@@ -59,14 +54,7 @@ const Login2 = () => {
             height: "100vh",
           }}
         >
-          <Slider {...settings}>
-            <div>
-              <h3>1</h3>
-            </div>
-            <div>
-              <h3>2</h3>
-            </div>
-          </Slider>
+          <Carousel />
         </Grid>
 
         <Grid item container xs={12} sm={6} justifyContent="center">
@@ -106,7 +94,6 @@ const Login2 = () => {
                 </Typography>
               </Grid>
               <form
-                //  className={classes.form}
                 noValidate
                 onSubmit={handleSubmit((data) => onHandleSubmit(data))}
               >
@@ -138,7 +125,7 @@ const Login2 = () => {
                   autoComplete="current-password"
                   icon={HttpsIcon}
                 />
-                {/* <RowContainer container> */}
+
                 <Grid
                   item
                   container
@@ -157,14 +144,11 @@ const Login2 = () => {
                   </Link>
                 </Grid>
 
-                {/* </RowContainer> */}
-
                 <Muibutton
                   type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
-                  //className={classes.submit}
                   size="large"
                   mt={3}
                 >
@@ -180,12 +164,7 @@ const Login2 = () => {
                 mb={3}
               >
                 {"Dont have an account yet? "}
-                <Link
-                  color="primary"
-                  href="https://mui.com/"
-                  // className={classes.noDecoration}
-                  underline="none"
-                >
+                <Link color="primary" href="https://mui.com/" underline="none">
                   Sign Up
                 </Link>
               </Typography>
