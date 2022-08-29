@@ -15,22 +15,30 @@ import Muibutton from "../../components/button/Muibutton";
 import { Input } from "../../components/input/input";
 import { useState } from "react";
 import Carousel from "../../components/carousel/Carousel";
-
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+  isTablet,
+  isIPad13,
+} from "react-device-detect";
+import { useLandscapeMode } from "../../utils/Utils";
 
 const schema = yup.object().shape({
   email: yup.string().email("Enter valid email!").required("Email is required"),
 });
 
 const schema2 = yup.object().shape({
-  password: yup.string().required('Password is required'),
-  confirmPassword: yup.string()
-     .oneOf([yup.ref('password'), null], 'Passwords must match')
+  password: yup.string().required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
 const theme = createTheme();
 
 const ForgotPass = () => {
-
   const [confirmReset, setConfirmReset] = useState(false);
 
   const onHandleSubmit = (data) => {
@@ -40,6 +48,7 @@ const ForgotPass = () => {
       console.log(data);
     } else setConfirmReset(true);
   };
+  const isLandscape = useLandscapeMode();
 
   const { register, handleSubmit, control, errors } = useForm({
     resolver: yupResolver(confirmReset ? schema2 : schema),
@@ -49,23 +58,31 @@ const ForgotPass = () => {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
+        {(!isMobile || (isTablet && isLandscape)) && (
+          <Grid
+            item
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            xs={false}
+            sm={6}
+            sx={{
+              backgroundColor: "#285cc4",
+              height: "100vh",
+              display: { xs: "none", sm: "block" },
+            }}
+          >
+            <Carousel />
+          </Grid>
+        )}
+
         <Grid
           item
-          direction="column"
-          alignItems="center"
+          container
+          xs={12}
+          sm={!isMobile || (isTablet && isLandscape) ? 6 : 12}
           justifyContent="center"
-          xs={false}
-          sm={6}
-          sx={{
-            backgroundColor: "#285cc4",
-            height: "100vh",
-            display: { xs: 'none', sm: 'block' }
-          }}
         >
-         <Carousel />
-        </Grid>
-
-        <Grid item container xs={12} sm={6} justifyContent="center">
           <Grid
             container
             item
@@ -79,7 +96,7 @@ const ForgotPass = () => {
             alignItems="center"
             // component={Paper}
             square
-            sx={{ height: "100vh" }}
+            sx={{ height: "100vh", minHeight: "500px" }}
           >
             <Grid item />
             <Grid item>

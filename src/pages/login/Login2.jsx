@@ -12,10 +12,18 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Muibutton from "../../components/button/Muibutton";
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+  isTablet,
+  isIPad13
+} from "react-device-detect";
 import { CheckBoxField } from "../../components/CheckBox/CheckBoxField";
 import { Input } from "../../components/input/input";
 import Carousel from "../../components/carousel/Carousel";
-
+import {useLandscapeMode} from "../../utils/Utils";
 
 const schema = yup.object().shape({
   userName: yup.string().required("User name is required"),
@@ -34,6 +42,8 @@ const Login2 = () => {
     });
   };
 
+  const isLandscape = useLandscapeMode();
+
   const { register, handleSubmit, control, errors } = useForm({
     resolver: yupResolver(schema),
   });
@@ -42,23 +52,25 @@ const Login2 = () => {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-        <Grid
-          item
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          xs={false}
-          sm={6}
-          sx={{
-            backgroundColor: "#285cc4",
-            height: "100vh",
-            display: { xs: 'none', sm: 'block' }
-          }}
-        >
-          <Carousel />
-        </Grid>
+        {(!isMobile || (isTablet && isLandscape)) && 
+          <Grid
+            item
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            xs={false}
+            sm={6}
+            sx={{
+              backgroundColor: "#285cc4",
+              height: "100vh",
+              display: { xs: "none", sm: "block" },
+            }}
+          >
+            <Carousel />
+          </Grid>  
+        }
 
-        <Grid item container xs={12} sm={6} justifyContent="center">
+        <Grid item container xs={12} sm={(!isMobile || (isTablet && isLandscape)) ? 6 : 12} justifyContent="center">
           <Grid
             container
             item
@@ -72,7 +84,7 @@ const Login2 = () => {
             alignItems="center"
             // component={Paper}
             square
-            sx={{ height: "100vh" }}
+            sx={{ height: "100vh", minHeight: "500px" }}
           >
             <Grid item />
             <Grid item>
