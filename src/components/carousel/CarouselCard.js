@@ -8,7 +8,8 @@ import Grid from "@mui/material/Grid";
 
 export default function CarouselCard({image}) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: "100%", backgroundColor: "#285cc4",
+    height: "90vh", borderRight: 0 }}>
       <CardActionArea>
         <Grid
           item
@@ -19,7 +20,7 @@ export default function CarouselCard({image}) {
         >
           <CardMedia
             component="img"
-            height="400"
+            height="300"
             image={image}
             alt="image"
           />

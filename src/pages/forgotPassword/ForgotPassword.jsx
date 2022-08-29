@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
@@ -14,8 +13,9 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Muibutton from "../../components/button/Muibutton";
 import { Input } from "../../components/input/input";
-import Slider from "react-slick";
 import { useState } from "react";
+import Carousel from "../../components/carousel/Carousel";
+
 
 const schema = yup.object().shape({
   email: yup.string().email("Enter valid email!").required("Email is required"),
@@ -30,14 +30,6 @@ const schema2 = yup.object().shape({
 const theme = createTheme();
 
 const ForgotPass = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-  };
 
   const [confirmReset, setConfirmReset] = useState(false);
 
@@ -59,21 +51,18 @@ const ForgotPass = () => {
         <CssBaseline />
         <Grid
           item
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
           xs={false}
           sm={6}
           sx={{
             backgroundColor: "#285cc4",
             height: "100vh",
+            display: { xs: 'none', sm: 'block' }
           }}
         >
-          <Slider {...settings}>
-            <div>
-              <h3>1</h3>
-            </div>
-            <div>
-              <h3>2</h3>
-            </div>
-          </Slider>
+         <Carousel />
         </Grid>
 
         <Grid item container xs={12} sm={6} justifyContent="center">

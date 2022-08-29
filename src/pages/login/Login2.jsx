@@ -14,8 +14,8 @@ import * as yup from "yup";
 import Muibutton from "../../components/button/Muibutton";
 import { CheckBoxField } from "../../components/CheckBox/CheckBoxField";
 import { Input } from "../../components/input/input";
-import Slider from "react-slick";
 import Carousel from "../../components/carousel/Carousel";
+
 
 const schema = yup.object().shape({
   userName: yup.string().required("User name is required"),
@@ -52,6 +52,7 @@ const Login2 = () => {
           sx={{
             backgroundColor: "#285cc4",
             height: "100vh",
+            display: { xs: 'none', sm: 'block' }
           }}
         >
           <Carousel />

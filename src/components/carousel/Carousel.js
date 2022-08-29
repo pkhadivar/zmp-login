@@ -4,7 +4,7 @@ import CarouselCard from "./CarouselCard";
 
  const PauseOnHover = () =>  {
  
-    var settings = {
+    const settings = {
       dots: true,
       infinite: true,
       slidesToShow: 1,
